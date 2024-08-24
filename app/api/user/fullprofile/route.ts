@@ -13,5 +13,9 @@ export async function GET() {
 
     const responseBody = await FetchProfile(session!, true);
 
+    if (responseBody === null) {
+        return new NextResponse(null, { status: 404 });
+    }
+
     return new NextResponse(JSON.stringify(responseBody), { status: 200 })
 }
