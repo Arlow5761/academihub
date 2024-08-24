@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import CardSection from '../components/CardSection' 
+import CardListSection from '../components/CardListSection' 
 import Navbar from '../components/Navbar'; 
 import { useRouter } from 'next/navigation';
 import Header from '../components/HeaderWithBackButton';
@@ -15,7 +15,7 @@ const BeasiswaPage: React.FC = () => {
       <div className="container mx-auto px-12 py-20">
         <Header title="Beasiswa" />
         <SearchBar/>
-        <CardSection/>
+        <CardListSection/>
       </div>
     </main>
   );

@@ -12,7 +12,7 @@ const Card = ({ imgUrl, title, url }) => {
       <hr style={{ borderTop: "2px solid #1F3C88", borderRadius: "0.5rem", margin: "0 1rem" }} />
       <div className="flex justify-center py-2">
         <Link href={url}>
-          <button className="bg-[#EE6F57] text-white py-2 px-4 rounded-xl hover:bg-[#1F3C88]">
+          <button className="bg-[#EE6F57] text-white py-2 px-4 rounded-full hover:bg-[#1F3C88]">
             Selengkapnya &gt;&gt;&gt;
           </button>
         </Link>
