@@ -6,13 +6,10 @@ export default async function POST(request: NextRequest) {
     const requestBody = await request.json();
     const loginStatus = await LoginUser(requestBody.username, requestBody.password);
     const response = new NextResponse;
-    
-    if (loginStatus)
-    {
+
+    if (loginStatus) {
         response.headers.set("status", "200");
-    }
-    else
-    {
+    } else {
         response.headers.set("status", "404");
     }
 
