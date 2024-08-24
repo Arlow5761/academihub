@@ -48,7 +48,7 @@ const Navbar = () => {
                                     <>
                                         <button
                                             onClick={() => toggleDropdown(index)}
-                                            className='text-xl hover:text-gray-300 focus:outline-none'
+                                            className='block py-2 pl-3 pr-4 sm:text-xl rounded md:p-0 hover:text-gray-300 focus:outline-none'
                                         >
                                             {link.title}
                                         </button>
