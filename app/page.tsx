@@ -1,28 +1,14 @@
-import Link from 'next/link';
+import CardSection from "./components/CardSection";
+import HeadHomepage from "./components/HeadHomepage";
 
-interface Item {
-  id: string;
-  title: string;
-  subtitle: string;
-}
-
-interface PageProps {
-  items: Item[];
-}
-
-const Page: React.FC<PageProps> = ({ items }) => {
+export default function Home() {
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {items.map((item: Item) => (
-        <Link key={item.id} href={`/detail/${item.id}`} passHref>
-          <div className="card">
-            <h2>{item.title}</h2>
-            <p>{item.subtitle}</p>
-          </div>
-        </Link>
-      ))}
-    </div>
+    <main className="flex min-h-screen flex-col bg-[#F6F5F5]">
+      <div className="container mx-auto px-12 py-4">
+        <HeadHomepage/>
+        <CardSection/>
+      </div>
+    </main>
   );
-};
+}
 
-export default Page;
