@@ -3,9 +3,9 @@ import Link from "next/link";
 
 const Card = ({ imgUrl, title, url }) => {
   return (
-    <div className="relative border-4 border-[#1F3C88] rounded-xl overflow-hidden">
+    <div className="relative border-4 border-[#1F3C88] rounded-xl overflow-hidden p-2">
       <div 
-        className="h-52 md:h-72 bg-cover bg-center" 
+        className="h-52 md:h-72 bg-cover bg-center rounded-xl border " 
         style={{ backgroundImage: `url(${imgUrl})` }}>
       </div>
       <h2 className='text-center text-4xl text-[#1F3C88] font-bold my-2'>{title}</h2>
