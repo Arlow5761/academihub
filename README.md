@@ -2,6 +2,7 @@
 > Tugas Milestone - SPARTA HMIF 2023
 
 # About
+  AcademiHub adalah suatu website informasi terpadu berisi informasi mengenai lomba, beasiswa, dan seminar bagi mahasiswa. 
 
 # Contributors 
   Kelompok 7
