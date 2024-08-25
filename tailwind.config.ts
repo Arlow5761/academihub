@@ -16,6 +16,16 @@ const config: Config = {
       boxShadow: {
         'custom': 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
       },
+
+      colors: {
+        'p-white' : '#F6F5F5',
+        'p-blue' : '#1F3C88',
+        'p-orange' : '#EE6F57',
+
+        'p-dark-blue' : '#070D59',
+        'p-gray-shaded' : '#070D5966',
+      },
+
     },
   },
   plugins: [],
