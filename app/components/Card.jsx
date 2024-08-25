@@ -5,8 +5,12 @@ const Card = ({ imgUrl, title, url }) => {
   return (
     <div className="relative border-4 border-[#1F3C88] rounded-xl overflow-hidden p-2">
       <div 
-        className="h-52 md:h-72 bg-cover bg-center rounded-xl border " 
-        style={{ backgroundImage: `url(${imgUrl})` }}>
+          className="w-full bg-cover bg-center rounded-xl" 
+          style={{ 
+            backgroundImage: `url(${imgUrl})`,
+            paddingBottom: '100%', // Membuat kontainer kotak
+            height: 0, 
+          }}>
       </div>
       <h2 className='text-center text-4xl text-[#1F3C88] font-bold my-2'>{title}</h2>
       <hr style={{ borderTop: "2px solid #1F3C88", borderRadius: "0.5rem", margin: "0 1rem" }} />
