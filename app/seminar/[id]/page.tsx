@@ -3,9 +3,10 @@ import {useEffect, useState} from "react";
 import HeaderWithBackButton from "../../components/HeaderWithBackButton";
 import Navbar from "../../components/Navbar";
 import GetSeminar from "@/app/lib/getseminar";
+import { SeminarData } from "@/app/lib/types";
 
 const DetailPage = ( { params } : { params : { id : string } } ) => {
-  const [detailData, setDetailedData] = useState<{ id : string, title : string, description : string} | null>(null);
+  const [detailData, setDetailedData] = useState<SeminarData | null>(null);
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
