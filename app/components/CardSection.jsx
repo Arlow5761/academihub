@@ -11,7 +11,7 @@ const projectData = [
   {
     id: 2,
     title: "Lomba",
-    image:"/images/Lomba.jpg",
+    image:"/images/Lomba2.jpg",
     url:"/lomba",
   },
   {
