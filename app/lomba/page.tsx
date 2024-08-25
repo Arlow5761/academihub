@@ -1,31 +1,24 @@
+"use client";
 import React from 'react';
+import CardListSection from '../components/CardListSection' 
+import Navbar from '../components/Navbar'; 
+import { useRouter } from 'next/navigation';
+import Header from '../components/HeaderWithBackButton';
+import SearchBar from '../components/SearchBar';
 
-interface Competition {
-    id: number;
-    name: string;
-    description: string;
-}
 
-const competitions: Competition[] = [
-    { id: 1, name: 'Competition 1', description: 'Description of Competition 1' },
-    { id: 2, name: 'Competition 2', description: 'Description of Competition 2' },
-    { id: 3, name: 'Competition 3', description: 'Description of Competition 3' },
-];
-
-const CompetitionPage: React.FC = () => {
-    return (
-        <div>
-            <h1>List of Competitions</h1>
-            <ul>
-                {competitions.map((competition) => (
-                    <li key={competition.id}>
-                        <h3>{competition.name}</h3>
-                        <p>{competition.description}</p>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+const LombaPage: React.FC = () => {
+  const router = useRouter();https://github.com/Arlow5761/academihub/pull/1/conflict?name=app%252Flomba%252Fpage.tsx&base_oid=c55d8547b59d2fbd5dd33b4e9c4b73f6d12c2da9&head_oid=5634b16c398109280a0250f298c74f35e599a05a
+  return (
+    <main className="flex min-h-screen flex-col bg-[#F6F5F5]">
+      <Navbar/>
+      <div className="container mx-auto px-12 py-20">
+        <Header title="Lomba" />
+        <SearchBar/>
+        <CardListSection/>
+      </div>
+    </main>
+  );
 };
 
-export default CompetitionPage;
+export default LombaPage;
