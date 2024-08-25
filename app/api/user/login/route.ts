@@ -2,7 +2,7 @@ import LoginUser from "@/app/lib/login";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     const requestBody = await request.json();
     const loginStatus = await LoginUser(requestBody.username, requestBody.password);
     const response = new NextResponse;

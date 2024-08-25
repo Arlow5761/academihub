@@ -27,7 +27,7 @@ const Home = () => {
 
       if (response.status === 200) { // Check for the specific status code
         // Optionally, handle setting cookies or tokens here if needed
-        router.push('/dashboard'); // Redirect after successful login
+        router.push('/'); // Redirect after successful login
       } else {
         setError('Login failed. Please check your username and password.');
       }
