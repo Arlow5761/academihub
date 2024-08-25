@@ -12,8 +12,10 @@ export default async function LoginUser(username : string, password : string) {
         return { status: false };
     }
 
-    if (dbuserdata.rows[0].username == username && dbuserdata.rows[0].password == password) {
+    if (dbuserdata.rows[0].username === username && dbuserdata.rows[0].password === password) {
         CreateSession(username);
         return { status: true };
     }
+
+    return { status: false };
 }

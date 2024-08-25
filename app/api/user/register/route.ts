@@ -6,11 +6,9 @@ export async function POST(request: NextRequest) {
     const registerStatus = await RegisterUser(requestBody.username, requestBody.password);
     const response = new NextResponse;
     
-    if (registerStatus) {
-        response.headers.set("status", "200");
-    } else {
-        response.headers.set("status", "404");
+    if (registerStatus!.status) {
+        return new NextResponse(null, { status: 200 })
     }
 
-    return response;
+    return new NextResponse(null, { status: 400 })
 }

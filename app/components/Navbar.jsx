@@ -21,6 +21,10 @@ const navLinks = [
         title: "Profile",
         path: "#profile",
     },
+    {
+        title: "Login",
+        path: "/login",
+    }
 ]
 
 const Navbar = () => {

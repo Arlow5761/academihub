@@ -5,13 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     const requestBody = await request.json();
     const loginStatus = await LoginUser(requestBody.username, requestBody.password);
-    const response = new NextResponse;
 
-    if (loginStatus) {
-        response.headers.set("status", "200");
-    } else {
-        response.headers.set("status", "404");
+    if (loginStatus!.status) {
+        return new NextResponse(null, { status: 200 })
     }
 
-    return response;
+    return new NextResponse(null, { status: 400 })
 }
