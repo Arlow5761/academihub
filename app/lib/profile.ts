@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres'
 
 export default async function FetchProfile(userID : string, detailed : boolean) {
     if (detailed) {
-        const user = await sql<{ username : string, profilePictureSrc : string, job : string, tags : string, description : string }>`SELECT Username, ProfilePictureSrc, Job, Tags, Description FROM Users WHERE ID='${userID}'`;
+        const user = await sql<{ username : string, profilePictureSrc : string, job : string, tags : string, description : string }>`SELECT username, profilepicturesrc, job, tags, description FROM users WHERE id='${userID}'`;
 
         if (user.rowCount != 1) {
             return null;
@@ -11,7 +11,7 @@ export default async function FetchProfile(userID : string, detailed : boolean) 
         return user.rows[0];
     }
     
-    const user = await sql<{ username : string, profilePictureSrc : string }>`SELECT Username, ProfilePictureSrc FROM Users WHERE ID='${userID}'`;
+    const user = await sql<{ username : string, profilePictureSrc : string }>`SELECT username, profilepicturesrc FROM users WHERE id='${userID}'`;
 
     if (user.rowCount != 1) {
         return null;
