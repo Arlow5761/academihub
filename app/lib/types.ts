@@ -1,34 +1,67 @@
 export class LombaData {
     id : string = "";
     title : string = "";
-    description : string = ""
+    caption : string = "";
+    account : string = "";
+    post_link : string = "";
+    image_link : string = "";
+    image_alt : string = "";
+    date_iso : string = "";
+    date_wib : string = "";
+    tags : string = "";
+    similarity : string = "";
 }
 
 export class BeasiswaData {
     id : string = "";
     title : string = "";
-    description : string = ""
+    caption : string = "";
+    account : string = "";
+    post_link : string = "";
+    image_link : string = "";
+    image_alt : string = "";
+    date_iso : string = "";
+    date_wib : string = "";
+    tags : string = "";
+    similarity : string = "";
 }
 
 export class SeminarData {
     id : string = "";
     title : string = "";
-    description : string = ""
+    caption : string = "";
+    account : string = "";
+    post_link : string = "";
+    image_link : string = "";
+    image_alt : string = "";
+    date_iso : string = "";
+    date_wib : string = "";
+    tags : string = "";
+    similarity : string = "";
 }
 
 export class LombaBriefData {
     id : string = "";
     title : string = "";
+    account : string = "";
+    image_link : string = "";
+    image_alt : string = "";
 }
 
 export class SeminarBriefData {
     id : string = "";
     title : string = "";
+    account : string = "";
+    image_link : string = "";
+    image_alt : string = "";
 }
 
 export class BeasiswaBriefData {
     id : string = "";
     title : string = "";
+    account : string = "";
+    image_link : string = "";
+    image_alt : string = "";
 }
 
 export class LombaListData {
