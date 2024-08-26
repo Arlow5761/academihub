@@ -15,7 +15,7 @@ const navLinks = [
     },
     {
         title: "Saved",
-        path: "#saved",
+        path: "/bookmark",
     },
     {
         title: "Profile",
