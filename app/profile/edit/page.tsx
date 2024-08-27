@@ -2,45 +2,42 @@
 import { useState, useEffect } from "react";
 
 const Home = () => {
-  // Initialize states
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isTagListVisible, setIsTagListVisible] = useState(false);
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [job, setJob] = useState("");
-  const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [error, setError] = useState(null);
 
-  const tags = ["Competitive Programming", "Capture The Flag", "Business Case Competition", "UI/UX", "Game Development"];
+  const tags = [
+    "Competitive Programming",
+    "Capture The Flag",
+    "Business Case Competition",
+    "UI/UX",
+    "Game Development",
+  ];
 
-  // Fetch profile data on component mount
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('/api/user/fullprofile'); // Adjust the endpoint if needed
+        const response = await fetch("/api/user/profile");
         if (response.status === 200) {
           const data = await response.json();
-          setUsername(data.username || "");
-          setName(data.name || "");
-          setJob(data.job || "");
-          setDescription(data.description || "");
-          setSelectedTags(data.tags || []);
+          setProfile(data);
+          setSelectedTags(data.tags || []); // Initialize selected tags from the profile data
         } else {
           setError("Failed to load profile data.");
         }
       } catch (error) {
         setError("An error occurred while fetching profile data.");
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading is set to false here
       }
     };
-
+  
     fetchProfileData();
   }, []);
-
-  // Handle tag click
+  
   const handleTagClick = (tag) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
@@ -49,51 +46,66 @@ const Home = () => {
     }
   };
 
-  // Handle removing a tag
   const handleRemoveTag = (tag) => {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
-  // Filter out selected tags from the list
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          profilepicture: reader.result, // Base64 string of the image
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+  
+    const updatedProfile = {
+      username: profile.username,
+      password: null,
+      job: profile.job,
+      description: profile.description,
+      tags: selectedTags.join(";"),
+      profilepicture: profile.profilepicture,
+    };
+  
+    try {
+      const response = await fetch("/api/user/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProfile),
+      });
+  
+      if (response.ok) {
+        console.log("Profile updated successfully.");
+      } else {
+        const errorData = await response.text();
+        setError(`Failed to update profile: ${errorData}`);
+      }
+    } catch (error) {
+      setError("An error occurred while updating the profile.");
+    } finally {
+      setLoading(false); // Ensure loading is set to false here as well
+    }
+  };
+  
+
+
   const filteredTags = tags
     .filter((tag) =>
       tag.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .filter((tag) => !selectedTags.includes(tag));
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const updatedProfile = {
-      username,
-      name,
-      job,
-      description,
-      tags: selectedTags,
-    };
-
-    try {
-      const response = await fetch('/api/user/fullprofile', {
-        method: 'PUT', // Use the appropriate HTTP method for updating
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedProfile),
-      });
-
-      if (response.ok) {
-        // Handle successful update (e.g., redirect or show success message)
-      } else {
-        setError("Failed to update profile.");
-      }
-    } catch (error) {
-      setError("An error occurred while updating the profile.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -105,46 +117,56 @@ const Home = () => {
 
   return (
     <main className="flex flex-row bg-white min-h-screen">
-      {/* Header with your name */}
-      <header className= "p-4 w-full fixed top-0 left-0 z-10">
+      <header className="p-4 w-full fixed top-0 left-0 z-10">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
           AcademiHub
         </div>
       </header>
-      
-      {/* Bagian kiri untuk login form */}
+
       <div className="flex items-center justify-center w-full min-h-screen pt-16">
-        <form onSubmit={handleSubmit} className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg overflow-y-auto" style={{ maxHeight: 'calc(100vh - 4rem)' }}>
-          <p className='text-center text-4xl font-bold text-p-blue'>Edit</p>
-          <p className='mt-4 text-p-dark-blue'>Username</p>
+        <form
+          onSubmit={handleSubmit}
+          className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg overflow-y-auto"
+          style={{ maxHeight: "calc(100vh - 4rem)" }}
+        >
+          <p className="text-center text-4xl font-bold text-p-blue">Edit</p>
+          <p className="mt-4 text-p-dark-blue">Username</p>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={profile.username || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, username: e.target.value })
+            }
             placeholder="youruserhere"
             className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
 
-          <p className='mt-4 text-p-dark-blue'>Nama</p>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="yournamehere"
-            className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />  
+          <p className="mt-4 text-p-dark-blue">Profile Picture</p>
+          <div className="flex items-center justify-center mb-4">
+            <img
+              src={profile.profilepicture || "/images/Profile1.png"}
+              alt="Profile Preview"
+              className="w-32 h-32 object-cover rounded-full border border-gray-300"
+            />
+          </div>
 
-          <p className='mt-4 text-p-dark-blue'>Pekerjaan</p>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+
+          <p className="mt-4 text-p-dark-blue">Pekerjaan</p>
           <input
             type="text"
-            value={job}
-            onChange={(e) => setJob(e.target.value)}
+            value={profile.job || ""}
+            onChange={(e) => setProfile({ ...profile, job: e.target.value })}
             placeholder="yourjobhere"
             className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
 
           <p className="mt-4 text-p-dark-blue">Favorite Tags</p>
-          {/* Selected Tags as Bubbles */}
           {selectedTags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-2">
               {selectedTags.map((tag) => (
@@ -164,7 +186,6 @@ const Home = () => {
             </div>
           )}
 
-          {/* Search Input */}
           <input
             type="text"
             value={searchQuery}
@@ -175,7 +196,6 @@ const Home = () => {
             className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
 
-          {/* Tag List */}
           {isTagListVisible && (
             <div className="mt-2 max-h-40 overflow-y-scroll border border-gray-300 rounded-lg p-2">
               {filteredTags.map((tag) => (
@@ -194,33 +214,37 @@ const Home = () => {
             </div>
           )}
 
-          <p className='mt-4 text-p-dark-blue'>Deskripsi</p>
+          <p className="mt-4 text-p-dark-blue">Deskripsi</p>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={profile.description || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, description: e.target.value })
+            }
             placeholder="yourdescriptionhere"
             rows={1}
             className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           />
 
           <div className="flex justify-between items-center mt-4 font-bold">
-            <button type="submit" className="w-full bg-p-orange p-2 pr-2 rounded text-xl text-white">
+            <button
+              type="submit"
+              className="w-full bg-p-orange p-2 pr-2 rounded text-xl text-white"
+            >
               Ubah
             </button>
           </div>
 
-          <p className='text-p-gray-shaded text-center mt-4'>atau</p>
-          <p className='mt-4 text-center text-p-dark-blue'>Tidak Jadi? <a href='/profile' className='text-p-orange'>Kembali</a></p>
-        
-        </form>
+          <p className="text-p-gray-shaded text-center mt-4">atau</p>
+          <p className="mt-4 text-center text-p-dark-blue"> Tidak Jadi?{" "} 
+            <a href="/profile" className="text-p-orange"> Kembali 
+            </a> 
+          </p> 
+        </form> 
       </div>
-      
-      {/* Bagian kanan dengan background putih */}
       <div className="w-[811px] min-h-screen bg-p-blue">
-        {/* Konten kosong */}
+        {/* Empty content */}
       </div>
-    </main>
-  );
+    </main>); 
 };
 
 export default Home;

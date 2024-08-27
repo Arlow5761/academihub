@@ -14,7 +14,8 @@ const Home = () => {
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const response = await fetch('/api/user/fullprofile');
+                // Updated API endpoint to match your friend's backend code
+                const response = await fetch('/api/user/profile');
                 console.log("Response:", response);  // Log the response for debugging
                 
                 if (response.status === 200) {
@@ -60,7 +61,7 @@ const Home = () => {
                         <div className="flex flex-col items-center">
                             {/* Profile Image */}
                             <Image
-                                src={profile.profilepicturesrc || "/images/Profile1.png"}
+                                src={profile.profilepicture || "/images/Profile1.png"}
                                 alt="Profile Image"
                                 width={200}
                                 height={200}
