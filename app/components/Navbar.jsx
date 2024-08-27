@@ -19,7 +19,7 @@ const navLinks = [
     },
     {
         title: "Profile",
-        path: "#profile",
+        path: "/profile",
     },
     {
         title: "Login",
