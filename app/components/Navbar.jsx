@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavLink from "./NavLink";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
     {
@@ -16,25 +17,54 @@ const navLinks = [
     {
         title: "Saved",
         path: "/bookmark",
-    },
-    {
-        title: "Profile",
-        path: "/profile",
-    },
-    {
-        title: "Login",
-        path: "/login",
     }
-]
+];
 
 const Navbar = () => {
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const response = await fetch('/api/user/profile');
+                if (response.status === 200) {
+                    setIsLoggedIn(true);
+                } else if (response.status === 404) {
+                    setIsLoggedIn(false);
+                } else {
+                    console.error('Unexpected response status:', response.status);
+                }
+            } catch (error) {
+                console.error('Error checking login status:', error);
+                setIsLoggedIn(false);
+            }
+        };
+
+        checkLoginStatus();
+    }, []);
 
     const toggleDropdown = (index) => {
         if (openDropdown === index) {
-            setOpenDropdown(null); // Tutup dropdown jika diklik lagi
+            setOpenDropdown(null);
         } else {
-            setOpenDropdown(index); // Buka dropdown untuk kategori tertentu
+            setOpenDropdown(index);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/user/logout', { method: 'GET' });
+
+            if (response.ok) {
+                setIsLoggedIn(false);
+                router.push('/');
+            } else {
+                console.error('Failed to logout:', response.status);
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
         }
     };
 
@@ -45,14 +75,14 @@ const Navbar = () => {
                     AcademiHub
                 </Link>
                 <div className='menu md:block md:w-auto' id='navbar'>
-                    <ul className='flex p-4 md:p-0 md:space-x-8 mt-0'>
+                    <ul className='flex items-center justify-center space-x-4'>
                         {navLinks.map((link, index) => (
-                            <li key={index} className='relative'>
+                            <li key={index} className='relative flex items-center'>
                                 {link.submenu ? (
                                     <>
                                         <button
                                             onClick={() => toggleDropdown(index)}
-                                            className='block py-2 pl-3 pr-4 sm:text-xl rounded md:p-0 hover:text-gray-300 focus:outline-none'
+                                            className='flex items-center justify-center py-2 px-4 text-base sm:text-xl rounded hover:text-gray-300 focus:outline-none'
                                         >
                                             {link.title}
                                         </button>
@@ -71,15 +101,34 @@ const Navbar = () => {
                                         )}
                                     </>
                                 ) : (
-                                    <NavLink href={link.path} title={link.title} />
+                                    <NavLink href={link.path} title={link.title} className="flex items-center justify-center py-2 px-4 text-base sm:text-xl hover:text-gray-300 focus:outline-none" />
                                 )}
                             </li>
                         ))}
+                        {isLoggedIn ? (
+                            <>
+                                <li className="flex items-center justify-center">
+                                    <NavLink href="/profile" title="Profile" className="flex items-center justify-center py-2 px-4 text-base sm:text-xl hover:text-gray-300 focus:outline-none" />
+                                </li>
+                                <li className="flex items-center justify-center">
+                                    <a
+                                        onClick={handleLogout}
+                                        className='flex items-center justify-center py-2 px-4 text-base sm:text-xl font rounded-lg bg-red-600 hover:bg-red-700 text-white cursor-pointer'
+                                    >
+                                        Logout
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            <li className="flex items-center justify-center">
+                                <NavLink href="/login" title="Login" className="flex items-center justify-center py-2 px-4 text-base sm:text-xl hover:text-gray-300 focus:outline-none" />
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
         </nav>
-    );
+    );       
 };
 
 export default Navbar;
