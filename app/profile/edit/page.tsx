@@ -73,7 +73,7 @@ const Home = () => {
       password: null,
       job: profile.job,
       description: profile.description,
-      tags: selectedTags.join(";"),
+      tags: selectedTags,
       profilepicture: profile.profilepicture,
     };
   
