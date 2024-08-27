@@ -31,7 +31,7 @@ const Home = () => {
       // Parse the status from the response headers
       const status = response.headers.get("status");
 
-      if (status === "200") {
+      if (response.status === 200) {
         // Handle successful registration here
         router.push('/login');
       } else {

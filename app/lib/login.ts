@@ -3,10 +3,9 @@ import { sql } from '@vercel/postgres';
 import CreateSession from './createsession';
 
 export default async function LoginUser(username : string, password : string) {
-    const tickedUsername = `'` + username + `'`;
-    const tickedPassword = `'` + password + `'`;
+    const dbuserdata = await sql<{ username : string, password : string }>`SELECT username, password FROM users WHERE username=${username};`;
 
-    const dbuserdata = await sql<{ username : string, password : string }>`SELECT username, password FROM users WHERE username=${tickedUsername} AND password=${tickedPassword};`;
+    console.log(dbuserdata);
 
     if (dbuserdata.rowCount != 1) {
         return { status: false };
