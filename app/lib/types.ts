@@ -82,16 +82,16 @@ export class BeasiswaListData {
 export class UserBriefData {
     id : string = "";
     username : string = "";
-    profilePictureSrc : string = "";
+    profilepicture : string = "";
 }
 
 export class UserData {
     id : string = "";
     username : string = "";
-    profilePictureSrc : string = "";
-    job : string = "";
-    tags : string = "";
-    description : string = ""
+    profilepicture : string | null = null;
+    job : string | null = null;
+    tags : string[] = [];
+    description : string | null = null;
 }
 
 export class BookmarkData {

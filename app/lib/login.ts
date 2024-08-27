@@ -3,7 +3,7 @@ import { sql } from '@vercel/postgres';
 import CreateSession from './createsession';
 
 export default async function LoginUser(username : string, password : string) {
-    const dbuserdata = await sql<{ username : string, password : string }>`SELECT username, password FROM users WHERE username=${username};`;
+    const dbuserdata = await sql<{ id : string, username : string, password : string }>`SELECT id, username, password FROM users WHERE username=${username};`;
 
     console.log(dbuserdata);
 
@@ -12,7 +12,7 @@ export default async function LoginUser(username : string, password : string) {
     }
 
     if (dbuserdata.rows[0].username === username && dbuserdata.rows[0].password === password) {
-        CreateSession(username);
+        CreateSession(dbuserdata.rows[0].id);
         return { status: true };
     }
 
