@@ -32,7 +32,7 @@ export default async function FetchProfile(userID : string, detailed : boolean) 
 
 export async function UpdateProfile(userID : string, username : string | null, password : string | null, profilepicture : string | null, job : string | null, tags : string[] | null, description : string | null) {
     if (profilepicture != null) {
-        await sql`UPDATE users SET profilepicture = decode(${profilepicture}, 'base64') WHERE id = ${userID}`;
+        await sql`UPDATE users SET profilepicture = ${profilepicture} WHERE id = ${userID}`;
     }
 
     if (job != null) {
