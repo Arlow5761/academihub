@@ -93,3 +93,17 @@ export class UserData {
     tags : string = "";
     description : string = ""
 }
+
+export class BookmarkData {
+    type : string = "";
+    id : string = "";
+    title : string = "";
+    account : string = "";
+    image_link : string = "";
+    image_alt : string = "";
+}
+
+export class BookmarkListData {
+    count : Number = 0;
+    bookmark : BookmarkData[] = [];
+}

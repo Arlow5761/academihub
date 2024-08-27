@@ -3,7 +3,7 @@ import { UserBriefData, UserData } from './types';
 
 export default async function FetchProfile(userID : string, detailed : boolean) {
     if (detailed) {
-        const user = await sql<UserData>`SELECT id, username, profilepicturesrc, job, tags, description FROM users WHERE id=${userID}`;
+        const user = await sql<UserData>`SELECT * FROM users WHERE id=${userID}`;
 
         if (user.rowCount != 1) {
             return null;

@@ -44,6 +44,13 @@ const CardSection = (args) => {
   const list = args.list;
   const type = args.type;
 
+  const DeduceType = (item) => {
+    if (type === "bookmark") {
+      return item.type;
+    }
+    return type;
+  };
+
   return (
     <section id="projects" className='px-4 xl:gap-8 xl:px-16'>
         <div className='grid md:grid-cols-3 gap-8 md:gap-12'>
@@ -52,7 +59,7 @@ const CardSection = (args) => {
             key={item.id} 
             title={item.title} 
             imgUrl="/images/Seminar.jpg"
-            url={`/${type}/${item.id}`}
+            url={`/${DeduceType(item)}/${item.id}`}
           />)}
         </div>
     </section>
