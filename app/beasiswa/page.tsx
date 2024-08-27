@@ -28,8 +28,8 @@ const BeasiswaPage: React.FC = () => {
   return (
     <main className="flex min-h-screen flex-col bg-[#F6F5F5]">
       <Navbar/>
-      <div className="container mx-auto px-12 py-20">
-        <Header title="Beasiswa" />
+      <div className="container mx-auto px-12 py-24">
+        <Header title="Beasiswa" iconType='beasiswa'/>
         <SearchBar setter={SetSearch} callback={OnSearch} />
         <CardListSection list={dataBeasiswa.beasiswa} type="beasiswa" />
       </div>

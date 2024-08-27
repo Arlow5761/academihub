@@ -27,7 +27,7 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
     <div className="my-20">
       <Navbar />
       <div className="mx-20">
-        <HeaderWithBackButton title="Detail Lomba" />
+        <HeaderWithBackButton title="Detail Lomba" iconType="detail"/>
       </div>
       <div className="grid grid-cols-2 mx-40 py-10 gap-5">
         <div>

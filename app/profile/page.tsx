@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
+import Header from '../components/HeaderWithBackButton';
 import { FaPencilAlt, FaUserCircle } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import { useEffect, useState } from "react";
@@ -46,14 +47,9 @@ const Home = () => {
     return (
         <main className="bg-p-white min-h-screen">
             <Navbar/>
-            <header className="pl-4 pt-24 flex items-center text-p-blue text-xl font-bold flex items-center ">
-                <a href="/" className="pl-4">
-                    <MdArrowBack className="text-2xl"/>
-                </a>
-                <FaUserCircle className="text-2xl mx-2" />
-                <span>| Setting Profil</span>
-            </header>
-
+            <div className="container mx-auto px-12 pt-24">
+            <Header title="Setting Profile" iconType="profile" />
+            </div>
             <div className="flex items-center justify-center py-10">
                 <div className="relative w-[800px] bg-white p-6 rounded-lg border border-gray-200 shadow-lg">
                     <div className="flex items-center">

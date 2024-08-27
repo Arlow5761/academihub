@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-[#F6F5F5]">
       <Navbar/>
-      <div className="container mx-auto px-12 py-12">
+      <div className="container mx-auto px-12 py-16">
         <HeadHomepage/>
-        <CardSection/>
+        <CardSection />
       </div>
     </main>
   );
