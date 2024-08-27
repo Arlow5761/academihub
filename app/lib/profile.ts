@@ -31,6 +31,26 @@ export default async function FetchProfile(userID : string, detailed : boolean) 
 }
 
 export async function UpdateProfile(userID : string, username : string | null, password : string | null, profilepicture : string | null, job : string | null, tags : string[] | null, description : string | null) {
+    if (username != null) {
+        let hasSameUsername = false;
+        const sameUsername = await sql<{ id : string, username : string }>`SELECT id, username FROM users WHERE username = ${username};`;
+        
+        if (sameUsername.rowCount !== null) {
+            if (sameUsername.rowCount > 0) {
+                for (let user of sameUsername.rows) {
+                    if (user.id !== userID) {
+                        hasSameUsername = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!hasSameUsername) {
+            await sql`UPDATE users SET username = ${username} WHERE id = ${userID}`;
+        }
+    }
+    
     if (profilepicture != null) {
         await sql`UPDATE users SET profilepicture = ${profilepicture} WHERE id = ${userID}`;
     }
