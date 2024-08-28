@@ -41,7 +41,13 @@ const HeaderWithBackButton: React.FC<HeaderWithBackButtonProps> = ({ title, icon
     <div className="flex items-center">
       <button
         className="group border-2 border-[#1F3C88] text-[#1F3C88] hover:border-[#EE6F57] p-2 rounded-full hover:bg-gray-200 focus:outline-none"
-        onClick={() => router.push('/')}
+        onClick={() => {
+          if (iconType === 'detail') {
+            router.back();
+          } else {
+            router.push('/');
+          }
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
