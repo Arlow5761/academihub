@@ -10,7 +10,19 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   const categorizedTags = {
-    // Your categorized tags here
+    Seminar: [
+      "Webinar", "Seminar Offline", "Motivasi", "Wawasan", "Skill"
+    ],
+    Lomba: [
+      "Olahraga", "Literasi", "Bisnis", "Budaya", "Visual/Estetika", "Debat", "Sains", "Sosial"
+    ],
+    Beasiswa: [
+      "Mahasiswa Baru", "Beasiswa Kuliah", "Mahasiswa", "Beasiswa Luar Negeri",
+      "Profesional Program", "Skill Development", "Beasiswa", "Study Exchange",
+      "Global Youth Summit", "Beasiswa Pelatihan", "Pelajar", "Beasiswa Pendidikan",
+      "Guru", "Beasiswa S2", "Professional Program", "Mahasiswi", "Professional Development",
+      "Pegawai", "Beasiswa Unggulan"
+    ] 
   };
 
   useEffect(() => {
@@ -46,7 +58,6 @@ const Home = () => {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
-  // Function to crop the image into a square
   const cropImageToSquare = (image) => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -63,12 +74,10 @@ const Home = () => {
     return canvas;
   };
 
-  // Function to compress the image if it's larger than 1 MB
   const compressImage = (canvas) => {
-    let quality = 1.0; // Start with highest quality
+    let quality = 1.0;
     let dataUrl = canvas.toDataURL("image/jpeg", quality);
 
-    // Reduce the quality gradually until the image size is below 1 MB
     while (dataUrl.length > 1 * 1024 * 1024 && quality > 0.1) {
       quality -= 0.1;
       dataUrl = canvas.toDataURL("image/jpeg", quality);
@@ -282,7 +291,6 @@ const Home = () => {
         </form>
       </div>
       <div className="w-[811px] min-h-screen bg-p-blue">
-        {/*Kosongan*/}
       </div>
     </main>
   );
