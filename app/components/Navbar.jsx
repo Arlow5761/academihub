@@ -67,7 +67,7 @@ const Navbar = () => {
     return (
         <nav className='fixed top-0 left-0 right-0 z-10 bg-[#1F3C88] text-[#F6F5F5] bg-opacity-100'>
             <div className='flex flex-wrap items-center justify-between mx-auto px-4 py-3'>
-                <Link href={"/"} className='text-2xl md:text-4xl text-[#F6F5F5] font-semibold'>
+                <Link href={"/homepage"} className='text-2xl md:text-4xl text-[#F6F5F5] font-semibold'>
                     AcademiHub
                 </Link>
                 <div className='menu md:block md:w-auto' id='navbar'>

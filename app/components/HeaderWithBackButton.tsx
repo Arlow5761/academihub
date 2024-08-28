@@ -45,7 +45,7 @@ const HeaderWithBackButton: React.FC<HeaderWithBackButtonProps> = ({ title, icon
           if (iconType === 'detail') {
             router.back();
           } else {
-            router.push('/');
+            router.push('/homepage');
           }
         }}
       >

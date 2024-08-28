@@ -26,7 +26,7 @@ const Home = () => {
       });
 
       if (response.status === 200) {
-        router.push('/')
+        router.push('/homepage')
       } else {
         setError('Login failed. Please check your username and password.');
       }

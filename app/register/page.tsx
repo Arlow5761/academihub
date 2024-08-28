@@ -31,7 +31,7 @@ const Home = () => {
       const status = response.headers.get("status");
 
       if (response.status === 200) {
-        router.push('/login');
+        router.push('/homepage');
       } else {
         setError('Registration failed. Username or password may already exist.');
       }
