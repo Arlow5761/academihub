@@ -14,10 +14,6 @@ const navLinks = [
             { title: "Seminar", path: "/seminar" },
         ],
     },
-    {
-        title: "Saved",
-        path: "/bookmark",
-    }
 ];
 
 const Navbar = () => {
@@ -87,7 +83,7 @@ const Navbar = () => {
                                             {link.title}
                                         </button>
                                         {openDropdown === index && (
-                                            <div className='absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10'>
+                                            <div className='absolute mt-48 w-48 bg-white rounded-md shadow-lg z-10'>
                                                 <ul className='py-2 text-[#1F3C88]'>
                                                     {link.submenu.map((item, idx) => (
                                                         <li key={idx} className="px-4 py-2 hover:bg-gray-200">
@@ -107,6 +103,9 @@ const Navbar = () => {
                         ))}
                         {isLoggedIn ? (
                             <>
+                                <li  className="flex items-center justify-center">
+                                    <NavLink href="/bookmark" title="Saved" className="flex items-center justify-center py-2 px-4 text-base sm:text-xl hover:text-gray-300 focus:outline-none" />
+                                </li>
                                 <li className="flex items-center justify-center">
                                     <NavLink href="/profile" title="Profile" className="flex items-center justify-center py-2 px-4 text-base sm:text-xl hover:text-gray-300 focus:outline-none" />
                                 </li>
