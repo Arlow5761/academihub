@@ -10,19 +10,19 @@ import ListBookmark from '../lib/listbookmark';
 
 
 const BookmarkPage: React.FC = () => {
-  const [search, SetSearch] = useState("")
-  const [dataBookmark, SetDataBookmark] = useState<BookmarkListData>({ count: 0, bookmark: [] })
+  const [search, SetSearch] = useState("");
+  const [dataBookmark, SetDataBookmark] = useState<BookmarkListData>({ count: 0, bookmark: [] });
 
   useEffect(() => {
-    async function Initialize() {
-      SetDataBookmark(await ListBookmark(0, 100, "", ""))
+    async function InitializeBookmark() {
+      SetDataBookmark(await ListBookmark(0, 100, "", ""));
     }
 
-    Initialize();
-  })
+    InitializeBookmark();
+  }, [])
 
   const OnSearch = async () => {
-    SetDataBookmark(await ListBookmark(0, 100, search, ""))
+    SetDataBookmark(await ListBookmark(0, 100, search, ""));
   }
 
   return (
