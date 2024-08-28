@@ -71,6 +71,11 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
           </h1>
           <hr className="mb-2 "></hr>
           <div className="flex justify-end">
+            <span className="mb-2 text-xl text-blue-800 underline text-justify flex-grow">
+              <a href={detailData?.post_link}>
+                Buka Lomba
+              </a>
+            </span>
             {isLoggedIn && (<button
               className={
                 isClicked ? "flex h-10 text-yellow-500 hover:text-yellow-500 " : "flex h-10 text-gray-800 hover:text-yellow-500 "
