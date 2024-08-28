@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(null);
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -28,14 +28,11 @@ const Home = () => {
         }),
       });
 
-      // Parse the status from the response headers
       const status = response.headers.get("status");
 
       if (response.status === 200) {
-        // Handle successful registration here
         router.push('/login');
       } else {
-        // Handle failure by showing an error message
         setError('Registration failed. Username or password may already exist.');
       }
     } catch (err) {
@@ -46,14 +43,12 @@ const Home = () => {
 
   return (
     <main className="flex flex-row items-stretch bg-white min-h-screen">
-      {/* Header with your name */}
       <header className="bg-white p-4 w-0">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
           AcademiHub
         </div>
       </header>
       
-      {/* Left section for the registration form */}
       <div className="flex items-center justify-center w-2/3 min-h-screen">
         <div className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg">
           <p className='text-center text-4xl font-bold text-p-blue'>Register</p>
@@ -103,9 +98,7 @@ const Home = () => {
         </div>
       </div>
       
-      {/* Right section with background */}
       <div className="w-[811px] min-h-screen bg-p-blue">
-        {/* Empty content */}
       </div>
     </main>
   );

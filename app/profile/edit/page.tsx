@@ -9,13 +9,9 @@ const Home = () => {
   const [isTagListVisible, setIsTagListVisible] = useState(false);
   const [error, setError] = useState(null);
 
-  const tags = [
-    "Competitive Programming",
-    "Capture The Flag",
-    "Business Case Competition",
-    "UI/UX",
-    "Game Development",
-  ];
+  const categorizedTags = {
+    // Your categorized tags here
+  };
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -24,20 +20,20 @@ const Home = () => {
         if (response.status === 200) {
           const data = await response.json();
           setProfile(data);
-          setSelectedTags(data.tags || []); // Initialize selected tags from the profile data
+          setSelectedTags(data.tags || []);
         } else {
           setError("Failed to load profile data.");
         }
       } catch (error) {
         setError("An error occurred while fetching profile data.");
       } finally {
-        setLoading(false); // Ensure loading is set to false here
+        setLoading(false);
       }
     };
-  
+
     fetchProfileData();
   }, []);
-  
+
   const handleTagClick = (tag) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
@@ -50,15 +46,52 @@ const Home = () => {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
+  // Function to crop the image into a square
+  const cropImageToSquare = (image) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const size = Math.min(image.width, image.height);
+    const offsetX = (image.width - size) / 2;
+    const offsetY = (image.height - size) / 2;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    ctx.drawImage(image, offsetX, offsetY, size, size, 0, 0, size, size);
+
+    return canvas;
+  };
+
+  // Function to compress the image if it's larger than 1 MB
+  const compressImage = (canvas) => {
+    let quality = 1.0; // Start with highest quality
+    let dataUrl = canvas.toDataURL("image/jpeg", quality);
+
+    // Reduce the quality gradually until the image size is below 1 MB
+    while (dataUrl.length > 1 * 1024 * 1024 && quality > 0.1) {
+      quality -= 0.1;
+      dataUrl = canvas.toDataURL("image/jpeg", quality);
+    }
+
+    return dataUrl;
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          profilepicture: reader.result, // Base64 string of the image
-        }));
+        const img = new Image();
+        img.src = reader.result;
+        img.onload = () => {
+          const canvas = cropImageToSquare(img);
+          const compressedImage = compressImage(canvas);
+          setProfile((prevProfile) => ({
+            ...prevProfile,
+            profilepicture: compressedImage,
+          }));
+        };
       };
       reader.readAsDataURL(file);
     }
@@ -67,7 +100,7 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const updatedProfile = {
       username: profile.username,
       password: null,
@@ -76,7 +109,7 @@ const Home = () => {
       tags: selectedTags,
       profilepicture: profile.profilepicture,
     };
-  
+
     try {
       const response = await fetch("/api/user/profile", {
         method: "POST",
@@ -85,7 +118,7 @@ const Home = () => {
         },
         body: JSON.stringify(updatedProfile),
       });
-  
+
       if (response.ok) {
         console.log("Profile updated successfully.");
       } else {
@@ -95,17 +128,9 @@ const Home = () => {
     } catch (error) {
       setError("An error occurred while updating the profile.");
     } finally {
-      setLoading(false); // Ensure loading is set to false here as well
+      setLoading(false);
     }
   };
-  
-
-
-  const filteredTags = tags
-    .filter((tag) =>
-      tag.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .filter((tag) => !selectedTags.includes(tag));
 
   if (loading) {
     return <div>Loading...</div>;
@@ -197,20 +222,35 @@ const Home = () => {
           />
 
           {isTagListVisible && (
-            <div className="mt-2 max-h-40 overflow-y-scroll border border-gray-300 rounded-lg p-2">
-              {filteredTags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => handleTagClick(tag)}
-                  className={`block w-full text-left px-4 py-2 rounded-lg mb-1 ${
-                    selectedTags.includes(tag)
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
+            <div className="mt-2 max-h-60 overflow-y-scroll border border-gray-300 rounded-lg p-2">
+              {Object.entries(categorizedTags).map(([category, tagsInCategory]) => {
+                const categoryMatches = category.toLowerCase().includes(searchQuery.toLowerCase());
+                const filteredTagsInCategory = tagsInCategory.filter(tag =>
+                  categoryMatches || tag.toLowerCase().includes(searchQuery.toLowerCase())
+                ).filter(tag => !selectedTags.includes(tag));
+
+                if (filteredTagsInCategory.length === 0) return null;
+
+                return (
+                  <div key={category}>
+                    <div className="border-b border-gray-300 mb-2 opacity-70 text-gray-700 font-semibold">
+                      {category}
+                    </div>
+
+                    {filteredTagsInCategory.map(tag => (
+                      <button
+                        key={tag}
+                        onClick={() => handleTagClick(tag)}
+                        className={`block w-full text-left px-4 py-2 rounded-lg mb-1 ${
+                          selectedTags.includes(tag) ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           )}
 
@@ -235,16 +275,17 @@ const Home = () => {
           </div>
 
           <p className="text-p-gray-shaded text-center mt-4">atau</p>
-          <p className="mt-4 text-center text-p-dark-blue"> Tidak Jadi?{" "} 
-            <a href="/profile" className="text-p-orange"> Kembali 
-            </a> 
-          </p> 
-        </form> 
+          <p className="mt-4 text-center text-p-dark-blue">
+            Tidak Jadi?{" "}
+            <a href="/profile" className="text-p-orange">Kembali</a>
+          </p>
+        </form>
       </div>
       <div className="w-[811px] min-h-screen bg-p-blue">
-        {/* Empty content */}
+        {/*Kosongan*/}
       </div>
-    </main>); 
+    </main>
+  );
 };
 
 export default Home;
