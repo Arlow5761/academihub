@@ -29,9 +29,9 @@ export async function RemoveBookmark(userID : string, type : string, itemID : st
     if (bookmarkString === null) return false;
 
     const bookmarks = bookmarkString.split(';');
-    let newBookmarkString = "";
+    let newBookmarkString : string | null = "";
 
-    for (let bookmark in bookmarks) {
+    for (let bookmark of bookmarks) {
         let bookmarkInfo = bookmark.split('.');
         let bookmarkType = bookmarkInfo[0];
         let bookmarkID = bookmarkInfo[1];
@@ -42,6 +42,10 @@ export async function RemoveBookmark(userID : string, type : string, itemID : st
     }
 
     newBookmarkString = newBookmarkString.slice(0, newBookmarkString.length - 1);
+
+    if (newBookmarkString.length === 0) {
+        newBookmarkString = null;
+    }
 
     await sql`UPDATE users SET bookmark = ${newBookmarkString} WHERE id = ${userID};`
 

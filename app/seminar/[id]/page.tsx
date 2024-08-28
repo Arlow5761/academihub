@@ -4,19 +4,47 @@ import HeaderWithBackButton from "../../components/HeaderWithBackButton";
 import Navbar from "../../components/Navbar";
 import GetSeminar from "@/app/lib/getseminar";
 import { SeminarData } from "@/app/lib/types";
+import ListBookmark from "@/app/lib/listbookmark";
 
 const DetailPage = ( { params } : { params : { id : string } } ) => {
   const [detailData, setDetailedData] = useState<SeminarData | null>(null);
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setIsClicked(!isClicked);
+
+    if (!isClicked) {
+      await fetch("/api/bookmark/add", {
+        method: "POST",
+        body: JSON.stringify({type: "seminar", itemID: params.id})
+      })
+    } else {
+      await fetch("/api/bookmark/remove", {
+        method: "POST",
+        body: JSON.stringify({type: "seminar", itemID: params.id})
+      })
+    }
   };
 
   useEffect(() => {
     const process = async () => {
       const data = await GetSeminar(params.id);
       setDetailedData(data);
+
+      if ((await fetch("/api/user/profile")).status === 200) {
+        setLoggedIn(true);
+      } else {
+        return;
+      }
+
+      const bookmarks = await ListBookmark(0, 100, "", "");
+      for (let item of bookmarks.bookmark) {
+        if (item.type === "beasiswa" && item.id == params.id) {
+          setIsClicked(true);
+          break;
+        }
+      }
     }
 
     process();
@@ -42,10 +70,10 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
           </h1>
           <hr className="mb-2 "></hr>
           <div className="flex justify-end">
-            <button
-              className={`flex h-10 text-gray-800 dark:text-white hover:text-yellow-500 ${
-                isClicked ? "text-yellow-500" : ""
-              }`}
+            {isLoggedIn && (<button
+              className={
+                isClicked ? "flex h-10 text-yellow-500 hover:text-yellow-500 " : "flex h-10 text-gray-800 hover:text-yellow-500 "
+              }
               onClick={handleClick}
             >
               <svg
@@ -65,7 +93,7 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
                 />
               </svg>
               <span className="mt-0.5">Simpan</span>
-            </button>
+            </button>)}
           </div>
 
           <p className="mb-2 text-xl  bold text-justify">Tanggal Posting: {detailData?.date_wib}</p>

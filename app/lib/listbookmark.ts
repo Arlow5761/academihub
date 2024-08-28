@@ -28,9 +28,17 @@ export default async function ListBookmark( start : Number, count : Number, sear
         let bookmarkType = bookmarkProperties[0];
         let bookmarkID = bookmarkProperties[1];
 
-        let bookmarkQuery = await sql<{ id : string, title : string, account : string, image_link : string, image_alt : string }>`SELECT id, title, account, image_link, image_alt FROM ${bookmarkType} WHERE id = ${bookmarkID} AND tags = ${formattedSearch};`
-        
-        if (bookmarkQuery.rowCount != 1) continue;
+        let bookmarkQuery = null;
+
+        if (bookmarkType === "beasiswa") {
+            bookmarkQuery = await sql<{ id : string, title : string, account : string, image_link : string, image_alt : string }>`SELECT id, title, account, image_link, image_alt FROM beasiswa WHERE id = ${bookmarkID} AND tags LIKE ${formattedSearch};`
+        } else if (bookmarkType === "lomba") {
+            bookmarkQuery = await sql<{ id : string, title : string, account : string, image_link : string, image_alt : string }>`SELECT id, title, account, image_link, image_alt FROM lomba WHERE id = ${bookmarkID} AND tags LIKE ${formattedSearch};`
+        } else if (bookmarkType === "seminar") {
+            bookmarkQuery = await sql<{ id : string, title : string, account : string, image_link : string, image_alt : string }>`SELECT id, title, account, image_link, image_alt FROM seminar WHERE id = ${bookmarkID} AND tags LIKE ${formattedSearch};`
+        }
+
+        if (bookmarkQuery === null || bookmarkQuery.rowCount != 1) continue;
 
         bookmarkDataArray = bookmarkDataArray.concat({ type: bookmarkType, ...bookmarkQuery.rows[0] });
     }
