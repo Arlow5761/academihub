@@ -33,13 +33,13 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
         <div>
           <img
             className="max-w-full rounded-2xl"
-            src="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
-            alt=""
+            src={detailData?.image_link}
+            alt={detailData?.image_alt}
           />
         </div>
         <div className="p-4 items-center border border-solid border-gray-300 w-full rounded-2xl shadow-custom">
           <h1 className="mt-2 mb-2 text-3xl text-blue-800 tracking-tight font-extrabold">
-            {detailData?.title}
+            Lomba
           </h1>
           <hr className="mb-2 "></hr>
           <div className="flex justify-end">
@@ -69,10 +69,10 @@ const DetailPage = ( { params } : { params : { id : string } } ) => {
             </button>
           </div>
 
-          <p className="mb-2 text-xl  bold text-justify">Tanggal Posting:</p>
-          <p className="mb-2 text-xl bold text-justify">Penyelenggara:</p>
+          <p className="mb-2 text-xl  bold text-justify">Tanggal Posting: {detailData?.date_wib}</p>
+          <p className="mb-2 text-xl bold text-justify">Penyelenggara: {detailData?.account}</p>
           <p className="mb-2 text-xl bold text-justify">Detail:</p>
-          <p className="mb-2 text-xl bold text-justify">{detailData?.description}</p>
+          <div className="mb-2 text-xl text-justify" dangerouslySetInnerHTML={{__html:detailData?.caption || ""}} />
         </div>
       </div>
     </div>

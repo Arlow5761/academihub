@@ -25,7 +25,10 @@ const config: Config = {
         'p-dark-blue' : '#070D59',
         'p-gray-shaded' : '#070D5966',
       },
-
+      
+      fontFamily: {
+        raleway: ['Raleway', 'sans-serif'],
+      }
     },
   },
   plugins: [],

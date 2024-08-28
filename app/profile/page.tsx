@@ -7,21 +7,17 @@ import { MdArrowBack } from "react-icons/md";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-    // State to store the profile data
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Fetch profile data on component mount
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                // Updated API endpoint to match your friend's backend code
                 const response = await fetch('/api/user/profile');
-                console.log("Response:", response);  // Log the response for debugging
-                
+                console.log("Response:", response);
                 if (response.status === 200) {
                     const data = await response.json();
-                    console.log("Profile data:", data);  // Log the data for debugging
+                    console.log("Profile data:", data);
                     setProfile(data);
                 } else {
                     console.error("Failed to fetch profile data, status code:", response.status);
@@ -53,9 +49,7 @@ const Home = () => {
             <div className="flex items-center justify-center py-10">
                 <div className="relative w-[800px] bg-white p-6 rounded-lg border border-gray-200 shadow-lg">
                     <div className="flex items-center">
-                        {/* Left Side: Profile Image and Edit Button */}
                         <div className="flex flex-col items-center">
-                            {/* Profile Image */}
                             <Image
                                 src={profile.profilepicture || "/images/Profile1.png"}
                                 alt="Profile Image"
@@ -63,7 +57,6 @@ const Home = () => {
                                 height={200}
                                 className="object-cover rounded-full ml-8 mr-8 mb-8"
                             />
-                            {/* Button to Edit Profile */}
                             <a href="/profile/edit" className="mt-4 ml-8 mr-8">
                                 <button className="bg-p-orange hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg flex items-center space-x-2">
                                     <FaPencilAlt />
@@ -72,7 +65,6 @@ const Home = () => {
                             </a>
                         </div>
 
-                        {/* Right Side: User Data */}
                         <div className="flex flex-col justify-center w-[60%] pl-6">
                             <h2 className="text-3xl font-bold">{profile.username}</h2>
                             <p>------------------------------------</p>

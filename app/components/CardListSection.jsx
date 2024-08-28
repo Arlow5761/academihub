@@ -57,8 +57,8 @@ const CardSection = (args) => {
           {list.map((item) => 
           <Card 
             key={item.id} 
-            title={item.title} 
-            imgUrl="/images/Seminar.jpg"
+            title={item.account} 
+            imgUrl={item.image_link}
             url={`/${DeduceType(item)}/${item.id}`}
           />)}
         </div>

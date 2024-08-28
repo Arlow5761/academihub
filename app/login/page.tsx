@@ -25,9 +25,8 @@ const Home = () => {
         body: JSON.stringify({ username, password }),
       });
 
-      if (response.status === 200) { // Check for the specific status code
-        // Optionally, handle setting cookies or tokens here if needed
-        router.push('/'); // Redirect after successful login
+      if (response.status === 200) {
+        router.push('/')
       } else {
         setError('Login failed. Please check your username and password.');
       }
@@ -39,14 +38,12 @@ const Home = () => {
 
   return (
     <main className="flex flex-row items-stretch bg-white min-h-screen">
-      {/* Header */}
       <header className="bg-white p-4 w-0">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
           AcademiHub
         </div>
       </header>
 
-      {/* Login Form */}
       <div className="flex items-center justify-center w-2/3 min-h-screen">
         <form onSubmit={handleLogin} className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg">
           <p className='text-center text-4xl font-bold text-p-blue'>Login</p>
@@ -88,9 +85,7 @@ const Home = () => {
         </form>
       </div>
 
-      {/* Right Section */}
       <div className="w-[811px] min-h-screen bg-p-blue">
-        {/* Empty Content */}
       </div>
     </main>
   );
