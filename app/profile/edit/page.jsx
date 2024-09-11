@@ -290,7 +290,7 @@ const Home = () => {
           </p>
         </form>
       </div>
-      <div className="w-[811px] min-h-screen bg-p-blue">
+      <div className="hidden md:block w-[811px] min-h-screen bg-p-blue">
       </div>
     </main>
   );

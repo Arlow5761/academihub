@@ -2,8 +2,7 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Header from '../components/HeaderWithBackButton';
-import { FaPencilAlt, FaUserCircle } from "react-icons/fa";
-import { MdArrowBack } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -14,10 +13,8 @@ const Home = () => {
         const fetchProfileData = async () => {
             try {
                 const response = await fetch('/api/user/profile');
-                console.log("Response:", response);
                 if (response.status === 200) {
                     const data = await response.json();
-                    console.log("Profile data:", data);
                     setProfile(data);
                 } else {
                     console.error("Failed to fetch profile data, status code:", response.status);
@@ -47,17 +44,17 @@ const Home = () => {
             <Header title="Setting Profile" iconType="profile" />
             </div>
             <div className="flex items-center justify-center py-10">
-                <div className="relative w-[800px] bg-white p-6 rounded-lg border border-gray-200 shadow-lg">
-                    <div className="flex items-center">
-                        <div className="flex flex-col items-center">
+                <div className="relative w-full max-w-[800px] bg-white p-6 rounded-lg border border-gray-200 shadow-lg">
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start">
+                        <div className="flex flex-col items-center lg:items-start mb-8 lg:mb-0 pl-4">
                             <Image
                                 src={profile.profilepicture || "/images/Profile1.png"}
                                 alt="Profile Image"
                                 width={200}
                                 height={200}
-                                className="object-cover rounded-full ml-8 mr-8 mb-8"
+                                className="object-cover rounded-full"
                             />
-                            <a href="/profile/edit" className="mt-4 ml-8 mr-8">
+                            <a href="/profile/edit" className="mt-4 ml-12 mr-12">
                                 <button className="bg-p-orange hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg flex items-center space-x-2">
                                     <FaPencilAlt />
                                     <span>Edit</span>
@@ -65,7 +62,7 @@ const Home = () => {
                             </a>
                         </div>
 
-                        <div className="flex flex-col justify-center w-[60%] pl-6">
+                        <div className="flex flex-col justify-center w-full lg:w-[60%] pl-0 lg:pl-12">
                             <h2 className="text-3xl font-bold">{profile.username}</h2>
                             <p>------------------------------------</p>
                             <p className="text-xl text-gray-600 mt-1">Pekerjaan: {profile.job || "N/A"}</p>

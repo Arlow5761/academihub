@@ -28,8 +28,6 @@ const Home = () => {
         }),
       });
 
-      const status = response.headers.get("status");
-
       if (response.status === 200) {
         router.push('/homepage');
       } else {
@@ -42,15 +40,15 @@ const Home = () => {
   };
 
   return (
-    <main className="flex flex-row items-stretch bg-white min-h-screen">
-      <header className="bg-white p-4 w-0">
+    <main className="flex flex-col md:flex-row bg-white min-h-screen">
+      <header className="bg-white p-4 w-full md:w-0">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
           AcademiHub
         </div>
       </header>
       
-      <div className="flex items-center justify-center w-2/3 min-h-screen">
-        <div className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg">
+      <div className="flex items-center justify-center w-full min-h-screen">
+        <div className="relative w-full max-w-md bg-white p-6 rounded-lg border border-gray-400 shadow-lg overflow-y-auto">
           <p className='text-center text-4xl font-bold text-p-blue'>Register</p>
           
           <p className='mt-4 text-p-dark-blue'>Username</p>
@@ -93,12 +91,11 @@ const Home = () => {
           {error && <p className='text-red-500 text-center mt-4'>{error}</p>}
 
           <p className='text-p-gray-shaded text-center mt-4'>or</p>
-          <p className='mt-4 text-center text-p-dark-blue'>Already have an account? <a href='/login' className='text-p-orange'>Login</a></p>
+          <p className='mt-4 text-center text-p-dark-blue'>Sudah mempunyai akun? <a href='/login' className='text-p-orange'>Login</a></p>
         
         </div>
       </div>
-      
-      <div className="w-[811px] min-h-screen bg-p-blue">
+      <div className="hidden md:block w-[811px] min-h-screen bg-p-blue">
       </div>
     </main>
   );
