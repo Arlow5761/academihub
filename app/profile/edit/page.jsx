@@ -173,8 +173,11 @@ const Home = () => {
             }
             placeholder="youruserhere"
             className="w-full pl-4 pr-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            minLength={1} // Batas minimum 1 karakter
+            maxLength={16} // Batas maksimum 16 karakter
+            required // Input tidak boleh kosong
           />
-
+          
           <p className="mt-4 text-p-dark-blue">Profile Picture</p>
           <div className="flex items-center justify-center mb-4">
             <img
