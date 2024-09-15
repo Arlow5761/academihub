@@ -40,7 +40,7 @@ const Home = () => {
     <main className="flex flex-col md:flex-row bg-white min-h-screen">
       <header className="bg-white p-4 w-full md:w-0">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
-          AcademiHub
+          <a href="/homepage" className="text-p-blue">AcademiHub</a>
         </div>
       </header>
 

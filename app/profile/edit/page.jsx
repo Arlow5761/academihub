@@ -153,7 +153,7 @@ const Home = () => {
     <main className="flex flex-row bg-white min-h-screen">
       <header className="p-4 w-full fixed top-0 left-0 z-10">
         <div className="text-left text-4xl font-bold text-p-blue ml-4 font-raleway">
-          AcademiHub
+          <a href="/homepage" className="text-p-blue">AcademiHub</a>
         </div>
       </header>
 
