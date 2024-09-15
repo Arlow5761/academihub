@@ -16,6 +16,17 @@ const Home = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // Validasi panjang username dan tidak ada spasi
+    if (username.length === 0 || username.length > 16) {
+      setError('Username harus antara 1 hingga 16 karakter.');
+      return;
+    }
+
+    if (/\s/.test(username)) {
+      setError('Username tidak boleh mengandung spasi.');
+      return;
+    }
+
     try {
       const response = await fetch('/api/user/register', {
         method: 'POST',
